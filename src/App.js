@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
   Divider,
@@ -83,15 +83,36 @@ function requestSort(input, algorithm) {
   });
 }
 
+/**
+ * Returns an array of supported sorting algorithms.
+ * @return {Promise}
+ */
+function requestSupported() {
+  return new Promise((accept, reject) => {
+    const request = new XMLHttpRequest();
+    request.onload = function() {
+      const supportedList = JSON.parse(request.responseText);
+      accept(supportedList);
+    };
+    request.onerror = function(err) {
+      reject(err);
+    };
+    request.open('GET', 'http://127.0.0.1:8080/sort/supported');
+    request.send();
+  });
+}
+
 const SortingPlugin = (props) => {
   const [algorithm, setAlgorithm] = useState(props.algorithm);
   const [steps, setSteps] = useState(props.steps || []);
+  const [supported, setSupported] = useState([]);
 
-  // ask server for supported algorithms
-  const supported = ['bubble', 'insertion', 'merge'];
-  if (!supported.includes(algorithm)) {
-    throw new Error('Unsupported algorithm passed.');
-  }
+  useEffect(() => {
+    // ask server for supported algorithms
+    requestSupported().then((supportedList) => {
+      setSupported(supportedList);
+    });
+  }, [supported]);
 
   const [input, setInput] = useState('');
 

@@ -33,9 +33,18 @@ func handleSortData(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(steps)
 }
 
+func getSupportedSort(w http.ResponseWriter, r *http.Request) {
+	setupCorsResponse(&w, r)
+	if r.Method == http.MethodOptions {
+		return
+	}
+	json.NewEncoder(w).Encode([]string{sort.BubbleSort, sort.InsertionSort})
+}
+
 func main() {
 	router := mux.NewRouter()
 
+	router.HandleFunc("/sort/supported", getSupportedSort).Methods(http.MethodGet, http.MethodOptions)
 	router.HandleFunc("/sort", handleSortData).Methods(http.MethodPost, http.MethodOptions)
 
 	port := ":8080"
