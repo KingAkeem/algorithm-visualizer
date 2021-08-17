@@ -77,7 +77,6 @@ func insertionSort(elements []int) *StepList {
 		for j >= 0 && elements[j] > key {
 			elements[j+1] = elements[j]
 			j = j - 1
-			steps.AddStep(elements)
 		}
 		elements[j+1] = key
 		steps.AddStep(elements)

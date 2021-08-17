@@ -174,7 +174,7 @@ const App = () => {
             <Menu />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Persistent drawer
+            Algorithm Visualizer
           </Typography>
         </Toolbar>
       </AppBar>
