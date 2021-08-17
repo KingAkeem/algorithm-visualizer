@@ -66,8 +66,8 @@ function requestSort(input, algorithm) {
   return new Promise((accept, reject) => {
     const request = new XMLHttpRequest();
     request.onload = function() {
-      const newSteps = JSON.parse(request.responseText);
-      accept(newSteps);
+      const stepData = JSON.parse(request.responseText);
+      accept(stepData['steps']);
     };
     request.onerror = function(err) {
       reject(err);
