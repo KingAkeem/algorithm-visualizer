@@ -38,7 +38,7 @@ func getSupportedSort(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodOptions {
 		return
 	}
-	json.NewEncoder(w).Encode([]string{sort.BubbleSort, sort.InsertionSort})
+	json.NewEncoder(w).Encode([]string{sort.BubbleSort, sort.InsertionSort, sort.MergeSort})
 }
 
 func main() {
